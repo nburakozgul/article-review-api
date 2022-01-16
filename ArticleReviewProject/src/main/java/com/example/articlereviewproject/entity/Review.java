@@ -3,6 +3,7 @@ package com.example.articlereviewproject.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "reviews")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,7 +12,8 @@ public class Review {
     private String reviewer;
     private String reviewContent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="article_id", nullable=false)
     private Article article;
 
 

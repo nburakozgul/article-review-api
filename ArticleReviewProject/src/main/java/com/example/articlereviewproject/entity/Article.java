@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "articles")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,7 +15,7 @@ public class Article {
     private String articleContent;
     private Date publishDate;
     private int starCount;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="article")
     private List<Review> reviews;
 
     public Article(String title, String author, String articleContent, Date publishDate, int starCount) {
