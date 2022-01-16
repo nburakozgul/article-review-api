@@ -15,7 +15,7 @@ public class Article {
     private String articleContent;
     private Date publishDate;
     private int starCount;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy="article")
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Review> reviews;
 
     public Article(String title, String author, String articleContent, Date publishDate, int starCount) {
@@ -28,6 +28,14 @@ public class Article {
 
     public Article() {
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -77,4 +85,6 @@ public class Article {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+
 }
