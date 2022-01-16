@@ -22,7 +22,7 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public Article saveReview(Article article){
+    public Article saveArticle(Article article){
         return articleRepository.save(article);
     }
 
