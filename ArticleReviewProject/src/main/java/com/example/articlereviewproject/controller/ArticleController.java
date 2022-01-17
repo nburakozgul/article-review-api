@@ -6,7 +6,9 @@ import com.example.articlereviewproject.error.CustomException;
 import com.example.articlereviewproject.error.ResourceNotFoundException;
 import com.example.articlereviewproject.service.ArticleService;
 import com.example.articlereviewproject.service.ReviewService;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +24,6 @@ public class ArticleController {
     @Autowired
     private ReviewService reviewService;
 
-    @GetMapping("/articles")
-    public List<Article> getAllArticles() {
-        return articleService.findAll();
-    }
-
     @GetMapping("/articles/{articleId}")
     public ResponseEntity<Article> getArticleById(@PathVariable(value = "articleId") Long articleId) throws ResourceNotFoundException {
         Article article =
@@ -34,6 +31,11 @@ public class ArticleController {
                         .findById(articleId)
                         .orElseThrow(() -> new ResourceNotFoundException("Article not found on :: " + articleId)); //EAGER a cekmeme ragmen neden gelmiyor?
         return ResponseEntity.ok().body(article);
+    }
+
+    @GetMapping("/articles")
+    public ResponseEntity<Iterable<Article>> getArticles(@QuerydslPredicate Predicate predicate) {
+        return ResponseEntity.ok(articleService.findAll(predicate));
     }
 
     @PostMapping("/articles")

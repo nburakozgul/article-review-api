@@ -1,8 +1,8 @@
 package com.example.articlereviewproject.service;
 
 import com.example.articlereviewproject.entity.Article;
-import com.example.articlereviewproject.entity.Review;
 import com.example.articlereviewproject.repository.ArticleRepository;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,8 @@ public class ArticleService {
     public List<Article> findAll(){
         return articleRepository.findAll();
     }
+
+    public Iterable<Article> findAll(Predicate predicate){return articleRepository.findAll(predicate);}
 
     public Article saveArticle(Article article){
         return articleRepository.save(article);

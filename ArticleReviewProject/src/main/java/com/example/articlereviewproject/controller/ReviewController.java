@@ -6,8 +6,10 @@ import com.example.articlereviewproject.error.CustomException;
 import com.example.articlereviewproject.error.ResourceNotFoundException;
 import com.example.articlereviewproject.service.ArticleService;
 import com.example.articlereviewproject.service.ReviewService;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.source.InvalidConfigurationPropertyValueException;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +26,6 @@ public class ReviewController {
     @Autowired
     private ArticleService articleService;
 
-    @GetMapping("/reviews")
-    public List<Review> getAllReviews() {
-        return reviewService.findAll();
-    }
-
     @GetMapping("/reviews/{reviewId}")
     public ResponseEntity<Review> getReviewById(@PathVariable(value = "reviewId") Long reviewId) throws ResourceNotFoundException {
         Review review =
@@ -36,6 +33,11 @@ public class ReviewController {
                         .findById(reviewId)
                             .orElseThrow(() -> new ResourceNotFoundException("Review not found on :: " + reviewId));
         return ResponseEntity.ok().body(review);
+    }
+
+    @GetMapping("/reviews")
+    public ResponseEntity<Iterable<Review>> getReview(@QuerydslPredicate Predicate predicate) {
+        return ResponseEntity.ok(reviewService.findAll(predicate));
     }
 
     @PostMapping("/reviews")
