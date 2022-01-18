@@ -1,6 +1,7 @@
 package com.example.articlereviewproject.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,7 +19,9 @@ public class Article {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date publishDate;
     private Integer starCount;
-    @OneToMany(fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy="article")
+    @JsonManagedReference
     private List<Review> reviews;
 
     public Article(String title, String author, String articleContent, Date publishDate, int starCount) {

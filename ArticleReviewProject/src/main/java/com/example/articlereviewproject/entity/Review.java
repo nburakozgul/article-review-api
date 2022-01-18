@@ -1,7 +1,6 @@
 package com.example.articlereviewproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -13,17 +12,22 @@ public class Review {
     private Long id;
     private String reviewer;
     private String reviewContent;
-    private Long a_id;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="article_id", nullable=false)
+    @JsonBackReference
     private Article article;
 
-    public Review(Long id, String reviewer, String reviewContent,Long a_id, Article article) {
+    public Review(Long id, String reviewer, String reviewContent, Article article) {
         this.id = id;
         this.reviewer = reviewer;
         this.reviewContent = reviewContent;
-        this.a_id = a_id;
+        this.article = article;
+    }
+
+    public Review(String reviewer, String reviewContent, Article article) {
+        this.reviewer = reviewer;
+        this.reviewContent = reviewContent;
         this.article = article;
     }
 
@@ -63,11 +67,4 @@ public class Review {
         this.article = article;
     }
 
-    public Long getA_id() {
-        return a_id;
-    }
-
-    public void setA_id(Long a_id) {
-        this.a_id = a_id;
-    }
 }
