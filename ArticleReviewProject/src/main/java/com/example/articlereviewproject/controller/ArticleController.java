@@ -1,7 +1,6 @@
 package com.example.articlereviewproject.controller;
 
 import com.example.articlereviewproject.entity.Article;
-import com.example.articlereviewproject.entity.Review;
 import com.example.articlereviewproject.error.CustomException;
 import com.example.articlereviewproject.error.ResourceNotFoundException;
 import com.example.articlereviewproject.service.ArticleService;
@@ -12,8 +11,6 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1")

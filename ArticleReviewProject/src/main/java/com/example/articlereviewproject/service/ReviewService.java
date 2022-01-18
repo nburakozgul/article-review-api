@@ -6,7 +6,6 @@ import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,10 +16,6 @@ public class ReviewService {
     public Optional<Review> findById(Long id){
         return reviewRepository.findById(id);
     };
-
-    public List<Review> findAll(){
-        return reviewRepository.findAll();
-    }
 
     public Iterable<Review> findAll(Predicate predicate){return reviewRepository.findAll(predicate);}
 
