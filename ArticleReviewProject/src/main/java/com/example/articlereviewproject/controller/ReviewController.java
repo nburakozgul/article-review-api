@@ -1,5 +1,6 @@
 package com.example.articlereviewproject.controller;
 
+import com.example.articlereviewproject.DTO.ReviewDTO;
 import com.example.articlereviewproject.entity.Article;
 import com.example.articlereviewproject.entity.Review;
 import com.example.articlereviewproject.error.CustomException;
@@ -8,14 +9,10 @@ import com.example.articlereviewproject.service.ArticleService;
 import com.example.articlereviewproject.service.ReviewService;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.source.InvalidConfigurationPropertyValueException;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/v1")
@@ -41,12 +38,13 @@ public class ReviewController {
     }
 
     @PostMapping("/reviews")
-    public ResponseEntity createReview(@RequestBody Review review) throws ResourceNotFoundException {
+    public ResponseEntity createReview(@RequestBody ReviewDTO reviewDTO) throws ResourceNotFoundException {
 
         Article article = articleService
-                .findById(review.getA_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Article not found on :: " + review.getA_id()));
-        review.setArticle(article);
+                .findById(reviewDTO.getArticleId())
+                .orElseThrow(() -> new ResourceNotFoundException("Article not found on :: " + reviewDTO.getArticleId()));
+
+        Review review = new Review(reviewDTO.getReviewer(),reviewDTO.getReviewContent(), article); // mapper kullanabilirsin
 
         try{
             reviewService.saveReview(review);
