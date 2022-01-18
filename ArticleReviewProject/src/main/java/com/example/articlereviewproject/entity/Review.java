@@ -13,7 +13,7 @@ public class Review {
     private String reviewer;
     private String reviewContent;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="article_id", nullable=false)
     @JsonBackReference
     private Article article;
