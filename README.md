@@ -36,4 +36,8 @@ Password : password
  
  ## Docker
 
- Soon
+ Run :   ```mvn clean package -DskipTests``` in src dir
+ 
+ Jar will be created under src/target copy that jar to src/main/docker
+ 
+ Run : ```docker-compose up``` in src/main/docker
